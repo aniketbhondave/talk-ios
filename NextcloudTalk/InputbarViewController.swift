@@ -156,10 +156,12 @@ import UIKit
         self.textView.tintColor = UIColor(cgColor: UIColor.systemBlue.cgColor)
 
         // Markdown formatting options
-        self.textView.registerMarkdownFormattingSymbol("**", withTitle: NSLocalizedString("Bold", comment: "Bold text"))
-        self.textView.registerMarkdownFormattingSymbol("_", withTitle: NSLocalizedString("Italic", comment: "Italic text"))
-        self.textView.registerMarkdownFormattingSymbol("~~", withTitle: NSLocalizedString("Strikethrough", comment: "Strikethrough text"))
-        self.textView.registerMarkdownFormattingSymbol("`", withTitle: NSLocalizedString("Code", comment: "Code block"))
+        if NCDatabaseManager.sharedInstance().serverHasTalkCapability(kCapabilityMarkdownMessages) {
+            self.textView.registerMarkdownFormattingSymbol("**", withTitle: NSLocalizedString("Bold", comment: "Bold text"))
+            self.textView.registerMarkdownFormattingSymbol("_", withTitle: NSLocalizedString("Italic", comment: "Italic text"))
+            self.textView.registerMarkdownFormattingSymbol("~~", withTitle: NSLocalizedString("Strikethrough", comment: "Strikethrough text"))
+            self.textView.registerMarkdownFormattingSymbol("`", withTitle: NSLocalizedString("Code", comment: "Code block"))
+        }
 
         if let pendingMessage = self.room.pendingMessage {
             self.setChatMessage(pendingMessage)
